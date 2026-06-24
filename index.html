@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saba Ticket — Tours & Travels</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sky: #0A6EBD;
+    --sky-dark: #064A82;
+    --sky-light: #E8F4FF;
+    --gold: #E9A31A;
+    --gold-dark: #B07A08;
+    --sand: #FDF6EC;
+    --deep: #0D1B2A;
+    --muted: #6B7B8D;
+    --border: #E2EAF4;
+    --white: #ffffff;
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--white);
+    color: var(--deep);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 clamp(1rem, 5vw, 4rem);
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 40px; height: 40px;
+    background: var(--sky);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-icon svg { width: 22px; height: 22px; fill: white; }
+  .logo-text { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--deep); }
+  .logo-text span { color: var(--sky); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--sky); }
+
+  .nav-cta {
+    background: var(--sky);
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 50px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--sky-dark) !important; color: white !important; }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--deep);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* ===== HERO ===== */
+  #hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0D1B2A 0%, #0A6EBD 50%, #1A8FD0 100%);
+    display: flex;
+    align-items: center;
+    padding: clamp(5rem, 10vw, 8rem) clamp(1rem, 5vw, 4rem) 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-circles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .hero-bg-circles circle { opacity: 0.06; }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 em { color: var(--gold); font-style: normal; }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--deep);
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary:hover { background: #f0b824; transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .stat-item { color: white; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; }
+  .stat-num span { color: var(--gold); }
+  .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.6); letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* ===== SEARCH BOX ===== */
+  #search-section {
+    padding: 0 clamp(1rem, 5vw, 4rem);
+    margin-top: -60px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .search-card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.14);
+    padding: 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .search-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 1.5rem;
+    background: var(--sky-light);
+    border-radius: var(--radius-sm);
+    padding: 4px;
+    width: fit-content;
+  }
+
+  .search-tab {
+    padding: 9px 20px;
+    border-radius: 6px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .search-tab.active {
+    background: white;
+    color: var(--sky);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .search-tab svg { width: 16px; height: 16px; }
+
+  .search-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 12px;
+    align-items: end;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .form-group input, .form-group select {
+    height: 48px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0 14px;
+    font-size: 0.92rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--deep);
+    outline: none;
+    transition: border-color 0.2s;
+    background: white;
+    width: 100%;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--sky); }
+
+  .search-btn {
+    height: 48px;
+    background: var(--sky);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0 28px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .search-btn:hover { background: var(--sky-dark); }
+
+  /* ===== SECTIONS ===== */
+  section { padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 4rem); }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--sky);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 0.6rem;
+  }
+  .section-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.7;
+  }
+  .section-head { margin-bottom: 2.5rem; }
+  .section-head.center { text-align: center; }
+  .section-head.center .section-sub { margin: 0 auto; }
+
+  /* ===== SERVICES ===== */
+  #services { background: var(--sand); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .service-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 1.8rem 1.5rem;
+    border: 1px solid var(--border);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(10,110,189,0.12); }
+
+  .service-icon {
+    width: 60px; height: 60px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.6rem;
+  }
+  .service-icon.plane { background: #E8F4FF; }
+  .service-icon.train { background: #EAF3DE; }
+  .service-icon.bus { background: #FAEEDA; }
+  .service-icon.hotel { background: #FBEAF0; }
+
+  .service-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--deep);
+    margin-bottom: 0.3rem;
+  }
+  .service-card p { font-size: 0.82rem; color: var(--muted); }
+
+  /* ===== POPULAR ROUTES ===== */
+  .routes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.4rem;
+  }
+
+  .route-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    background: white;
+  }
+  .route-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.1); }
+
+  .route-img {
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+  }
+
+  .route-img-bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .route-badge {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: rgba(0,0,0,0.55);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 50px;
+    backdrop-filter: blur(4px);
+  }
+
+  .route-body { padding: 1.2rem; }
+  .route-route {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--deep);
+    margin-bottom: 6px;
+  }
+  .route-arrow { color: var(--sky); font-size: 1rem; }
+  .route-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .route-price { font-size: 1.1rem; font-weight: 700; color: var(--sky); }
+  .route-price span { font-size: 0.75rem; font-weight: 400; color: var(--muted); }
+  .route-type { font-size: 0.75rem; color: var(--muted); }
+
+  /* ===== DEALS ===== */
+  #deals { background: var(--deep); }
+  #deals .section-label { color: var(--gold); }
+  #deals .section-title { color: white; }
+  #deals .section-sub { color: rgba(255,255,255,0.6); }
+
+  .deals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.4rem;
+  }
+
+  .deal-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: background 0.2s;
+  }
+  .deal-card:hover { background: rgba(255,255,255,0.08); }
+
+  .deal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  .deal-icon { font-size: 2rem; }
+  .deal-discount {
+    background: var(--gold);
+    color: var(--deep);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+  }
+
+  .deal-card h3 { color: white; font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
+  .deal-card p { color: rgba(255,255,255,0.5); font-size: 0.82rem; line-height: 1.5; margin-bottom: 1.2rem; }
+
+  .deal-price { display: flex; align-items: baseline; gap: 8px; }
+  .deal-original { color: rgba(255,255,255,0.35); font-size: 0.85rem; text-decoration: line-through; }
+  .deal-current { color: var(--gold); font-size: 1.3rem; font-weight: 700; }
+
+  /* ===== HOW IT WORKS ===== */
+  #how { background: var(--sky-light); }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    position: relative;
+  }
+
+  .step {
+    text-align: center;
+    position: relative;
+  }
+  .step-num {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--sky);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    position: relative;
+    z-index: 2;
+  }
+  .step h3 { font-size: 0.95rem; font-weight: 600; color: var(--deep); margin-bottom: 0.4rem; }
+  .step p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+  /* ===== BOOKING MODAL ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: white;
+    border-radius: var(--radius);
+    padding: 2rem;
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: var(--muted);
+    width: 30px; height: 30px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
+  }
+  .modal-close:hover { background: var(--sky-light); color: var(--sky); }
+
+  .modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+    color: var(--deep);
+  }
+  .modal-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+
+  .modal-form { display: flex; flex-direction: column; gap: 14px; }
+  .modal-form input, .modal-form select {
+    height: 46px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0 14px;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--deep);
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+  .modal-form input:focus, .modal-form select:focus { border-color: var(--sky); }
+
+  .modal-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .btn-book {
+    height: 50px;
+    background: var(--sky);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 6px;
+  }
+  .btn-book:hover { background: var(--sky-dark); }
+
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 1rem 0;
+  }
+  .success-msg .check {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  .success-msg h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--deep); margin-bottom: 0.5rem; }
+  .success-msg p { color: var(--muted); font-size: 0.9rem; }
+
+  /* ===== TESTIMONIALS ===== */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.4rem;
+  }
+
+  .testimonial {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  .stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 0.8rem; }
+  .testimonial p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.2rem; }
+  .testimonial-author { display: flex; align-items: center; gap: 10px; }
+  .author-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--sky);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .author-name { font-size: 0.88rem; font-weight: 600; color: var(--deep); }
+  .author-route { font-size: 0.75rem; color: var(--muted); }
+
+  /* ===== NEWSLETTER ===== */
+  #newsletter {
+    background: linear-gradient(135deg, var(--sky) 0%, var(--sky-dark) 100%);
+    text-align: center;
+    padding: 4rem clamp(1rem, 5vw, 4rem);
+  }
+  #newsletter .section-label { color: rgba(255,255,255,0.7); }
+  #newsletter .section-title { color: white; margin-bottom: 0.5rem; }
+  #newsletter .section-sub { color: rgba(255,255,255,0.7); margin: 0 auto 2rem; }
+
+  .newsletter-form {
+    display: flex;
+    gap: 10px;
+    max-width: 460px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .newsletter-form input {
+    flex: 1;
+    min-width: 220px;
+    height: 48px;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0 16px;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+  }
+  .newsletter-form button {
+    height: 48px;
+    background: var(--gold);
+    color: var(--deep);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .newsletter-form button:hover { background: #f0b824; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--deep);
+    color: rgba(255,255,255,0.6);
+    padding: 3rem clamp(1rem, 5vw, 4rem) 2rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 3rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .footer-brand .logo-text { color: white; }
+  .footer-brand p { font-size: 0.85rem; line-height: 1.7; margin-top: 0.8rem; }
+
+  .footer-col h4 {
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-col a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: white; }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* ===== RESULTS PANEL ===== */
+  #results-panel {
+    background: white;
+    border-top: 3px solid var(--sky);
+    padding: 3rem clamp(1rem, 5vw, 4rem);
+    display: none;
+  }
+  #results-panel.show { display: block; }
+
+  .results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .results-count { font-size: 0.9rem; color: var(--muted); }
+  .results-count strong { color: var(--deep); }
+
+  .result-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .result-item {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 1.5rem;
+    align-items: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .result-item:hover { border-color: var(--sky); box-shadow: 0 4px 20px rgba(10,110,189,0.08); }
+
+  .result-type-icon { font-size: 1.6rem; }
+  .result-times { display: flex; align-items: center; gap: 12px; }
+  .result-time { font-size: 1rem; font-weight: 700; color: var(--deep); }
+  .result-duration {
+    font-size: 0.75rem;
+    color: var(--muted);
+    background: var(--sky-light);
+    padding: 3px 10px;
+    border-radius: 50px;
+  }
+  .result-details { font-size: 0.8rem; color: var(--muted); }
+  .result-price { font-size: 1.2rem; font-weight: 700; color: var(--sky); text-align: right; }
+  .result-price small { display: block; font-size: 0.72rem; font-weight: 400; color: var(--muted); }
+  .result-book {
+    background: var(--sky);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 9px 18px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .result-book:hover { background: var(--sky-dark); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; gap: 0; position: fixed; top: 68px; left: 0; right: 0; background: white; border-top: 1px solid var(--border); padding: 1rem 0; box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+    .nav-links.open { display: flex; }
+    .nav-links li { border-bottom: 1px solid var(--border); }
+    .nav-links a { display: block; padding: 1rem 2rem; font-size: 1rem; }
+    .nav-cta { margin: 0.5rem 2rem; display: inline-block; }
+    .hamburger { display: flex; }
+    .search-form { grid-template-columns: 1fr 1fr; }
+    .search-form .search-btn { grid-column: span 2; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .result-item { grid-template-columns: auto 1fr; gap: 0.8rem; }
+    .result-price, .result-book { grid-column: span 2; text-align: left; }
+    .hero-stats { gap: 1.5rem; }
+  }
+
+  @media (max-width: 480px) {
+    .search-form { grid-template-columns: 1fr; }
+    .search-form .search-btn { grid-column: span 1; }
+    .search-tabs { width: 100%; overflow-x: auto; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Loading spinner */
+  .spinner {
+    width: 22px; height: 22px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--deep);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 3000;
+    transition: transform 0.3s ease;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+    </div>
+    <span class="logo-text">Saba<span>Ticket</span></span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#routes">Routes</a></li>
+    <li><a href="#deals">Deals</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal('Sign In'); return false;">Sign In</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <svg class="hero-bg-circles" viewBox="0 0 1400 800" preserveAspectRatio="none">
+    <circle cx="1200" cy="100" r="300" fill="white"/>
+    <circle cx="300" cy="700" r="200" fill="white"/>
+    <circle cx="900" cy="500" r="150" fill="white"/>
+  </svg>
+  <div class="hero-content">
+    <div class="hero-badge">✈ India's trusted travel companion since 2018</div>
+    <h1>Your journey,<br><em>perfectly booked</em></h1>
+    <p class="hero-sub">Book trains, flights, and buses across India in seconds. Best prices, instant confirmation, 24/7 support.</p>
+    <div class="hero-actions">
+      <a href="#search-section" class="btn-primary">🔍 Search Travel</a>
+      <a href="#deals" class="btn-outline">🏷 View Deals</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">2.4<span>M+</span></div>
+        <div class="stat-label">Happy Travelers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">50<span>K+</span></div>
+        <div class="stat-label">Routes Available</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4.9<span>★</span></div>
+        <div class="stat-label">App Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div id="search-section">
+  <div class="search-card">
+    <div class="search-tabs" id="searchTabs">
+      <button class="search-tab active" data-mode="flight" onclick="switchTab(this, 'flight')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+        Flights
+      </button>
+      <button class="search-tab" data-mode="train" onclick="switchTab(this, 'train')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="13" rx="2"/><path d="M4 13l-2 5m18-5l2 5M8 21l4-3 4 3M8 16v-5m8 5v-5"/></svg>
+        Trains
+      </button>
+      <button class="search-tab" data-mode="bus" onclick="switchTab(this, 'bus')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6v6m8-6v6M3 6h18M3 10h18m-2 9v-2H5v2m14-6H5V4a2 2 0 012-2h10a2 2 0 012 2v9z"/></svg>
+        Buses
+      </button>
+    </div>
+
+    <div class="search-form" id="searchForm">
+      <div class="form-group">
+        <label>From</label>
+        <input type="text" id="fromCity" placeholder="Mumbai, Delhi..." autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>To</label>
+        <input type="text" id="toCity" placeholder="Goa, Jaipur..." autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="travelDate">
+      </div>
+      <button class="search-btn" onclick="doSearch()">Search</button>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH RESULTS -->
+<div id="results-panel">
+  <div class="results-header">
+    <div>
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--deep); margin-bottom: 4px;">Available Options</h2>
+      <p class="results-count" id="resultsCount">Showing <strong>0</strong> results</p>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <select id="sortBy" onchange="sortResults()" style="height:38px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0 12px;font-size:0.85rem;background:white;cursor:pointer;outline:none;">
+        <option value="price">Lowest Price</option>
+        <option value="duration">Fastest</option>
+        <option value="departure">Departure</option>
+      </select>
+    </div>
+  </div>
+  <div class="result-list" id="resultList"></div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-head center">
+    <div class="section-label">What We Offer</div>
+    <h2 class="section-title">All your travel needs, one platform</h2>
+    <p class="section-sub">Book tickets, find deals, and manage your travel plans — all in one place.</p>
+  </div>
+  <div class="services-grid">
+    <a href="#" class="service-card" onclick="switchTabById('flight'); document.getElementById('search-section').scrollIntoView({behavior:'smooth'}); return false;">
+      <div class="service-icon plane">✈️</div>
+      <h3>Flight Tickets</h3>
+      <p>Domestic & international flights with best fares</p>
+    </a>
+    <a href="#" class="service-card" onclick="switchTabById('train'); document.getElementById('search-section').scrollIntoView({behavior:'smooth'}); return false;">
+      <div class="service-icon train">🚂</div>
+      <h3>Train Tickets</h3>
+      <p>Indian Railways — all classes, all routes</p>
+    </a>
+    <a href="#" class="service-card" onclick="switchTabById('bus'); document.getElementById('search-section').scrollIntoView({behavior:'smooth'}); return false;">
+      <div class="service-icon bus">🚌</div>
+      <h3>Bus Tickets</h3>
+      <p>AC, sleeper & luxury buses across India</p>
+    </a>
+    <a href="#" class="service-card" onclick="openModal('Hotel Booking'); return false;">
+      <div class="service-icon hotel">🏨</div>
+      <h3>Hotels</h3>
+      <p>Curated stays from budget to luxury</p>
+    </a>
+  </div>
+</section>
+
+<!-- ROUTES -->
+<section id="routes">
+  <div class="section-head">
+    <div class="section-label">Popular Routes</div>
+    <h2 class="section-title">Most booked journeys</h2>
+    <p class="section-sub">Millions travel these routes every month. Get the best prices, guaranteed.</p>
+  </div>
+  <div class="routes-grid" id="routesGrid"></div>
+</section>
+
+<!-- DEALS -->
+<section id="deals">
+  <div class="section-head">
+    <div class="section-label">Hot Deals</div>
+    <h2 class="section-title">Limited time offers</h2>
+    <p class="section-sub">Flash sales and exclusive discounts — grab them before they expire.</p>
+  </div>
+  <div class="deals-grid" id="dealsGrid"></div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-head center">
+    <div class="section-label">The Process</div>
+    <h2 class="section-title">Book in 3 simple steps</h2>
+  </div>
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Choose your route</h3>
+      <p>Enter your origin, destination, and travel date. Filter by flight, train, or bus.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Pick & pay</h3>
+      <p>Compare options by price, duration, and comfort. Pay securely via UPI, card, or netbanking.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Get your ticket</h3>
+      <p>Instant e-ticket to your email and WhatsApp. Manage bookings from your dashboard.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Travel & enjoy</h3>
+      <p>Real-time alerts for platform, gate changes, and delays. We're with you all the way.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="reviews">
+  <div class="section-head center">
+    <div class="section-label">Customer Stories</div>
+    <h2 class="section-title">What travelers say</h2>
+  </div>
+  <div class="testimonials-grid" id="testimonialsGrid"></div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter">
+  <div class="section-label">Stay Updated</div>
+  <h2 class="section-title">Get deals before everyone else</h2>
+  <p class="section-sub">Subscribe and be the first to hear about flash sales, new routes, and exclusive offers.</p>
+  <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+    <input type="email" id="nlEmail" placeholder="your@email.com" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+        </div>
+        <span class="logo-text">Saba<span>Ticket</span></span>
+      </div>
+      <p>India's most trusted travel booking platform. Flights, trains, buses — we get you there, for less.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Flight Tickets</a></li>
+        <li><a href="#">Train Tickets</a></li>
+        <li><a href="#">Bus Tickets</a></li>
+        <li><a href="#">Hotel Booking</a></li>
+        <li><a href="#">Tour Packages</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Partners</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Cancellation</a></li>
+        <li><a href="#">Refunds</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="tel:18001234567">☎ 1800-123-4567</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 SabaTicket Tours & Travels Pvt. Ltd.</span>
+    <span>Privacy Policy · Terms of Use · Sitemap</span>
+  </div>
+</footer>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal(null, true)">✕</button>
+    <h2 id="modalTitle">Book Ticket</h2>
+    <p class="modal-sub" id="modalSub">Fill in your details to continue</p>
+    <div class="modal-form" id="modalForm">
+      <input type="text" placeholder="Full name" id="bookName">
+      <input type="email" placeholder="Email address" id="bookEmail">
+      <input type="tel" placeholder="Mobile number" id="bookPhone">
+      <div class="row">
+        <input type="text" placeholder="From" id="bookFrom">
+        <input type="text" placeholder="To" id="bookTo">
+      </div>
+      <div class="row">
+        <input type="date" id="bookDate">
+        <select id="bookClass">
+          <option value="">Select class</option>
+          <option>Economy</option>
+          <option>Business</option>
+          <option>First Class</option>
+          <option>Sleeper</option>
+          <option>AC 3 Tier</option>
+          <option>AC 2 Tier</option>
+        </select>
+      </div>
+      <input type="number" placeholder="Number of passengers" min="1" max="9" id="bookPassengers">
+      <button class="btn-book" onclick="processBooking()">Confirm Booking</button>
+    </div>
+    <div class="success-msg" id="successMsg">
+      <div class="check">✅</div>
+      <h3>Booking Confirmed!</h3>
+      <p>Your e-ticket has been sent to your email. Check your inbox for confirmation details.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== DATA =====
+const ROUTES = [
+  { from:'Mumbai', to:'Delhi', price:2499, type:'flight', duration:'2h 10m', icon:'✈️', color:'#E8F4FF', emoji:'🌆' },
+  { from:'Delhi', to:'Jaipur', price:399, type:'train', duration:'5h 30m', icon:'🚂', color:'#EAF3DE', emoji:'🏰' },
+  { from:'Bangalore', to:'Goa', price:850, type:'bus', duration:'10h', icon:'🚌', color:'#FAEEDA', emoji:'🌊' },
+  { from:'Chennai', to:'Hyderabad', price:1299, type:'flight', duration:'1h 05m', icon:'✈️', color:'#E8F4FF', emoji:'🕌' },
+  { from:'Mumbai', to:'Pune', price:249, type:'bus', duration:'3h 30m', icon:'🚌', color:'#FAEEDA', emoji:'🏢' },
+  { from:'Delhi', to:'Varanasi', price:699, type:'train', duration:'11h', icon:'🚂', color:'#EAF3DE', emoji:'🛕' },
+];
+
+const DEALS = [
+  { icon:'✈️', title:'Mumbai → Goa Flight', desc:'Book before June 30. Weekend departures included.', original:'₹3,200', current:'₹1,599', pct:'50% OFF' },
+  { icon:'🚂', title:'Delhi → Agra Train', desc:'Shatabdi Express on selected dates. AC chair car.', original:'₹850', current:'₹499', pct:'41% OFF' },
+  { icon:'🚌', title:'Bangalore → Mysore Bus', desc:'Luxury sleeper AC. Departs 10 PM daily.', original:'₹600', current:'₹350', pct:'42% OFF' },
+  { icon:'✈️', title:'Chennai → Mumbai Flight', desc:'Early morning departures. Limited seats available.', original:'₹4,100', current:'₹2,199', pct:'46% OFF' },
+];
+
+const TESTIMONIALS = [
+  { text:'Booked a last-minute train to Varanasi and got confirmed tickets instantly. The WhatsApp alert was a lifesaver!', name:'Priya Sharma', route:'Delhi → Varanasi', initials:'PS', stars:5 },
+  { text:'Best prices for Mumbai-Goa flights, period. Compared with 3 other sites and SabaTicket was cheaper every single time.', name:'Rahul Mehta', route:'Mumbai → Goa', initials:'RM', stars:5 },
+  { text:'Smooth bus booking for Bangalore to Mysore. Driver details and seat map were exactly as shown. Very professional.', name:'Kavitha R.', route:'Bangalore → Mysore', initials:'KR', stars:4 },
+];
+
+// Mock search data
+const SEARCH_DB = {
+  flight: [
+    { time:'06:15 - 08:25', duration:'2h 10m', airline:'Air India', price:2499, stops:'Non-stop', icon:'✈️' },
+    { time:'10:45 - 13:10', duration:'2h 25m', airline:'IndiGo', price:1899, stops:'Non-stop', icon:'✈️' },
+    { time:'14:00 - 17:05', duration:'3h 05m', airline:'SpiceJet', price:1499, stops:'1 stop', icon:'✈️' },
+    { time:'19:30 - 21:40', duration:'2h 10m', airline:'Vistara', price:3199, stops:'Non-stop', icon:'✈️' },
+  ],
+  train: [
+    { time:'06:00 - 14:30', duration:'8h 30m', airline:'Rajdhani Express', price:899, stops:'AC 2 Tier', icon:'🚂' },
+    { time:'08:15 - 18:00', duration:'9h 45m', airline:'Shatabdi Express', price:599, stops:'Chair Car', icon:'🚂' },
+    { time:'22:00 - 08:15', duration:'10h 15m', airline:'Duronto Express', price:1199, stops:'Sleeper', icon:'🚂' },
+  ],
+  bus: [
+    { time:'07:00 - 12:30', duration:'5h 30m', airline:'SRS Travels', price:349, stops:'AC Seater', icon:'🚌' },
+    { time:'21:30 - 07:00', duration:'9h 30m', airline:'VRL Travels', price:599, stops:'AC Sleeper', icon:'🚌' },
+    { time:'22:00 - 07:30', duration:'9h 30m', airline:'Orange Tours', price:749, stops:'Volvo AC', icon:'🚌' },
+  ]
+};
+
+let currentMode = 'flight';
+let currentResults = [];
+
+// ===== RENDER =====
+function renderRoutes() {
+  const grid = document.getElementById('routesGrid');
+  grid.innerHTML = ROUTES.map(r => `
+    <div class="route-card" onclick="quickSearch('${r.from}', '${r.to}', '${r.type}')">
+      <div class="route-img" style="background: ${r.color};">
+        <span style="font-size:3.5rem; position:relative; z-index:2;">${r.emoji}</span>
+        <div class="route-badge">${r.icon} ${r.type.charAt(0).toUpperCase()+r.type.slice(1)}</div>
+      </div>
+      <div class="route-body">
+        <div class="route-route">
+          <span>${r.from}</span>
+          <span class="route-arrow">→</span>
+          <span>${r.to}</span>
+        </div>
+        <div class="route-meta">
+          <div class="route-price">₹${r.price.toLocaleString()} <span>onwards</span></div>
+          <div class="route-type">${r.duration}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderDeals() {
+  document.getElementById('dealsGrid').innerHTML = DEALS.map(d => `
+    <div class="deal-card">
+      <div class="deal-header">
+        <span class="deal-icon">${d.icon}</span>
+        <span class="deal-discount">${d.pct}</span>
+      </div>
+      <h3>${d.title}</h3>
+      <p>${d.desc}</p>
+      <div class="deal-price">
+        <span class="deal-original">${d.original}</span>
+        <span class="deal-current">${d.current}</span>
+      </div>
+      <button class="btn-primary" style="margin-top:1rem;font-size:0.85rem;padding:10px 20px;" onclick="openModal('${d.title}')">Book Deal</button>
+    </div>
+  `).join('');
+}
+
+function renderTestimonials() {
+  document.getElementById('testimonialsGrid').innerHTML = TESTIMONIALS.map(t => `
+    <div class="testimonial">
+      <div class="stars">${'★'.repeat(t.stars)}${'☆'.repeat(5-t.stars)}</div>
+      <p>"${t.text}"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">${t.initials}</div>
+        <div>
+          <div class="author-name">${t.name}</div>
+          <div class="author-route">${t.route}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== SEARCH =====
+function switchTab(btn, mode) {
+  document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  currentMode = mode;
+}
+
+function switchTabById(mode) {
+  document.querySelectorAll('.search-tab').forEach(t => {
+    if (t.dataset.mode === mode) { t.classList.add('active'); currentMode = mode; }
+    else t.classList.remove('active');
+  });
+}
+
+function doSearch() {
+  const from = document.getElementById('fromCity').value.trim();
+  const to = document.getElementById('toCity').value.trim();
+  const date = document.getElementById('travelDate').value;
+
+  if (!from || !to) { showToast('Please enter origin and destination'); return; }
+
+  currentResults = [...SEARCH_DB[currentMode]];
+  displayResults(from, to, date);
+  document.getElementById('results-panel').classList.add('show');
+  setTimeout(() => document.getElementById('results-panel').scrollIntoView({behavior:'smooth'}), 100);
+}
+
+function quickSearch(from, to, type) {
+  document.getElementById('fromCity').value = from;
+  document.getElementById('toCity').value = to;
+  switchTabById(type);
+  doSearch();
+  document.getElementById('search-section').scrollIntoView({behavior:'smooth'});
+}
+
+function displayResults(from, to, date) {
+  document.getElementById('resultsCount').innerHTML = `Showing <strong>${currentResults.length}</strong> results for <strong>${from || '?'} → ${to || '?'}</strong>`;
+  const list = document.getElementById('resultList');
+  list.innerHTML = currentResults.map((r, i) => `
+    <div class="result-item" onclick="openModal('${r.airline} — ${r.time}')">
+      <span class="result-type-icon">${r.icon}</span>
+      <div>
+        <div class="result-times">
+          <span class="result-time">${r.time}</span>
+          <span class="result-duration">${r.duration}</span>
+        </div>
+        <div class="result-details">${r.airline} · ${r.stops}</div>
+      </div>
+      <div class="result-price">₹${r.price.toLocaleString()} <small>per person</small></div>
+      <button class="result-book" onclick="event.stopPropagation(); openBookingFromResult('${r.airline}', '${r.price}')">Book</button>
+    </div>
+  `).join('');
+}
+
+function sortResults() {
+  const key = document.getElementById('sortBy').value;
+  if (key === 'price') currentResults.sort((a,b) => a.price - b.price);
+  else if (key === 'duration') currentResults.sort((a,b) => a.duration.localeCompare(b.duration));
+  else currentResults.sort((a,b) => a.time.localeCompare(b.time));
+  const from = document.getElementById('fromCity').value;
+  const to = document.getElementById('toCity').value;
+  displayResults(from, to, '');
+}
+
+// ===== MODAL =====
+function openModal(title) {
+  document.getElementById('modalTitle').textContent = title || 'Book Ticket';
+  document.getElementById('modalSub').textContent = 'Fill in your details to complete your booking';
+  document.getElementById('modalForm').style.display = 'flex';
+  document.getElementById('successMsg').style.display = 'none';
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function openBookingFromResult(airline, price) {
+  openModal(`Book: ${airline}`);
+  document.getElementById('modalSub').textContent = `Price: ₹${Number(price).toLocaleString()} per person`;
+}
+
+function closeModal(e, force) {
+  if (force || (e && e.target === document.getElementById('modalOverlay'))) {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+function processBooking() {
+  const name = document.getElementById('bookName').value.trim();
+  const email = document.getElementById('bookEmail').value.trim();
+  const phone = document.getElementById('bookPhone').value.trim();
+  if (!name || !email || !phone) { showToast('Please fill all required fields'); return; }
+
+  document.getElementById('modalForm').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+
+  setTimeout(() => {
+    closeModal(null, true);
+    showToast('🎉 Ticket booked! Check your email.');
+  }, 3000);
+}
+
+// ===== NEWSLETTER =====
+function subscribeNewsletter(e) {
+  e.preventDefault();
+  const email = document.getElementById('nlEmail').value;
+  showToast(`✅ Subscribed! Deals heading to ${email}`);
+  document.getElementById('nlEmail').value = '';
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ===== NAV =====
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', scrollY > 20);
+});
+
+// Set default date
+const today = new Date();
+const dd = String(today.getDate()).padStart(2,'0');
+const mm = String(today.getMonth()+1).padStart(2,'0');
+document.getElementById('travelDate').value = `${today.getFullYear()}-${mm}-${dd}`;
+document.getElementById('bookDate').value = `${today.getFullYear()}-${mm}-${dd}`;
+
+// ===== INIT =====
+renderRoutes();
+renderDeals();
+renderTestimonials();
+</script>
+</body>
+</html>
